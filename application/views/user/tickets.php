@@ -75,16 +75,6 @@
                         <textarea name="action" id="ckeditor" class="ckeditor"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
-                        <select name="category" id="category" class="form-control">
-                            <option value="">--Chose Category--</option>
-                            <option value="1">Network</option>
-                            <option value="2">Hardware</option>
-                            <option value="3">Software</option>
-                            <option value="4">General</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <input type="hidden" class="form-control" id="status" name="status" value="6">
                     </div>
                     <div class="form-group">

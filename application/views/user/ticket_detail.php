@@ -34,7 +34,10 @@
                         <td>Category</td>
                         <td>:</td>
                         <td>
-                            <?php if ($td->category == 1) {
+                            <?php 
+                                $id_category = $td->category;
+                                $category = "";
+                                if ($td->category == 1) {
                                     $category = "Network";
                                 } else if ($td->category == 2) {
                                     $category = "Hardware";
@@ -42,6 +45,9 @@
                                     $category = "Software";
                                 } else if ($td->category == 4) {
                                     $category = "Software";
+                                }
+                                else{
+                                    $category ="Uncategories";  
                                 }
                                 echo "$category";
                                 ?>
@@ -121,20 +127,48 @@
                         </div>
                         <div class="form-group">
                             <label for="category">Category</label>
-                            <select name="category_update" id="category_update" class="form-control" disabled>
-                                <option value="">
-                                    <?php if ($t->category == 1) {
-                                            echo "Network";
-                                        } elseif ($t->category == 2) {
-                                            echo "Hardware";
-                                        } elseif ($t->category == 3) {
-                                            echo "Software";
-                                        } elseif ($t->category == 4) {
-                                            echo "General";
-                                        }  ?>
+                            <select name="category_update" id="category_update" class="form-control">
+                                <option value="0">Uncategories</option>
+                                <option value="1">Network</option>
+                                <option value="2">Hardware</option>
+                                <option value="3">General</option>
+                                <option value="4">Software</option>
+
+                                <?php 
+                                // $category = "";
+                                // if ($td->category == 1) {
+                                //     $category = "Network";
+                                // } else if ($td->category == 2) {
+                                //     $category = "Hardware";
+                                // } else if ($td->category == 3) {
+                                //     $category = "Software";
+                                // } else if ($td->category == 4) {
+                                //     $category = "Software";
+                                // }
+                                // else{
+                                //     $category ="Uncategories";  
+                                // }
+                                // echo "$category";
+                                ?>
                                 </option>
                             </select>
                         </div>
+                        <?php
+                            if($role_id == 1){
+                        ?>
+                        <div class="form-group">
+                                
+                            <label for="petugas">Petugas</label>
+                            <select name="petugas_update" id="petugas_update" class="form-control">
+                                <?php
+                                foreach($petugas->result() as $p){
+                                    echo "<option value='$p->id'>$p->name</option>";
+                                }
+                                    // <option>tes</option>
+                                    ?>
+                            </select>
+                        </div>
+                            <?php } ?>
                         <div class="form-group">
                             <label for="category">Status</label>
                             <select name="status_update" id="status_update" class="form-control">
@@ -182,6 +216,9 @@
 
 <script>
     var closed = document.getElementById("status");
+    $(document).ready(function(){
+        $('#category_update').val('<?=$id_category?>');
+    })
     if ('#status' == closed) {
         $('#tombol_update').hide();
         $('#tombol_closed').hide();

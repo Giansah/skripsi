@@ -110,17 +110,29 @@ class User extends CI_Controller
     {
         $data['title'] = 'Ticket';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        if ($this->session->userdata("role_id") == 3) {
+            $where = array(
+                "petugas_id" => $this->session->userdata("user_id"),
+                "status" => 5
+            );
+        } else {
+            $where = array(
+                "status" => 5
+            );
+        }
+        $data['role_id'] = $this->session->userdata("role_id");
+
         $data['ticket_open'] = $this->User_model->get_ticket_open()->result();
-        $data['ticket_pending'] = $this->User_model->get_ticket_pending()->result();
+        $data['ticket_pending'] = $this->User_model->get_ticket_pending($where)->result();
+        // var_dump($this->db->last_query());
         $data['ticket_closed'] = $this->User_model->get_ticket_closed()->result();
 
         $this->form_validation->set_rules('problem', 'Problem', 'required|trim');
         $this->form_validation->set_rules('report_by', 'Report By', 'required|trim');
         $this->form_validation->set_rules('action', 'Action', 'required|trim');
-        $this->form_validation->set_rules('category', 'Category', 'required|trim');
-
-
+        // $this->form_validation->set_rules('category', 'Category', 'required|trim');
         if ($this->form_validation->run() == false) {
+            $data['create'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -130,7 +142,7 @@ class User extends CI_Controller
             $data = [
                 'problem' => $this->input->post('problem'),
                 'report_by' => $this->input->post('report_by'),
-                'category' => $this->input->post('category'),
+                // 'category' => $this->input->post('category'),
                 'status' => $this->input->post('status')
             ];
             // return var_dump($data);
@@ -159,12 +171,14 @@ class User extends CI_Controller
         $data['detail'] = $this->User_model->get_detail_ticket($id);
         $data['get_id_ticket'] = $this->User_model->get_id_ticket($get_id);
         $data['closed'] = $this->User_model->closed($id)->row();
+        $data['role_id'] = $this->session->userdata("role_id");
 
         $this->form_validation->set_rules('action_update', 'Action', 'required|trim');
         $this->form_validation->set_rules('status_update', 'Status', 'required|trim');
+        $this->form_validation->set_rules('category_update', 'Category', 'required');
 
         if (!$this->form_validation->run()) {
-
+            $data['petugas'] = $this->User_model->getPetugas();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -178,8 +192,12 @@ class User extends CI_Controller
             ];
 
             $data2 = [
-                'status' => $this->input->post('status_update')
+                'status' => $this->input->post('status_update'),
+                "category" => $this->input->post("category_update", true)
             ];
+            if($this->input->post("petugas_update")!=""){
+                $data2["petugas_id"] = $this->input->post('petugas_update');
+            }
 
             $this->db->insert('ticket_detail', $data);
             $this->db->update('ticket', $data2);
@@ -216,7 +234,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('problem', 'Problem', 'required|trim');
         $this->form_validation->set_rules('report_by', 'Report By', 'required|trim');
         $this->form_validation->set_rules('action', 'Action', 'required|trim');
-        $this->form_validation->set_rules('category', 'Category', 'required|trim');
+        // $this->form_validation->set_rules('category', 'Category', 'required|trim');
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
@@ -227,7 +245,7 @@ class User extends CI_Controller
             $data = [
                 'problem' => $this->input->post('problem'),
                 'report_by' => $this->input->post('report_by'),
-                'category' => $this->input->post('category'),
+                // 'category' => $this->input->post('category'),
                 'status' => $this->input->post('status'),
                 'user_id' => $this->input->post('user_id')
             ];

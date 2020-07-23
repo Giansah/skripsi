@@ -165,31 +165,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('user/ticket') ?>" method="post">
+                <form action="<?php echo base_url('user/tickets'); ?>" method="post">
                     <div class="form-group">
                         <label for="problem">Problem/Subject</label>
                         <input type="text" class="form-control" id="problem" name="problem">
                     </div>
-                    <div class="form-group">
-                        <label for="report_by">Report By</label>
-                        <input type="text" class="form-control" id="report_by" name="report_by">
-                    </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
+                        <label for="report_by">Report By</label> -->
+                    <input type="hidden" class="form-control" id="report_by" name="report_by" value="<?= $create['name']; ?>">
+                    <!-- </div> -->
+                    <div class=" form-group">
                         <label for="action">Action</label>
                         <textarea name="action" id="ckeditor" class="ckeditor"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
-                        <select name="category" id="category" class="form-control">
-                            <option value="">--Chose Category--</option>
-                            <option value="1">Network</option>
-                            <option value="2">Hardware</option>
-                            <option value="3">Software</option>
-                            <option value="4">General</option>
-                        </select>
+                        <input type="hidden" class="form-control" id="status" name="status" value="6">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="status" name="status" value="6">
+                        <input type="hidden" class="form-control" id="user_id" name="user_id" value="<?= $user['id']; ?>">
                     </div>
             </div>
             <div class="modal-footer">

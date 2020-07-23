@@ -26,9 +26,10 @@ class User_model extends CI_Model
         return $this->db->query("SELECT * FROM `ticket_detail` WHERE `id_ticket` = $get_id ")->result();
     }
 
-    public function get_ticket_pending()
+    public function get_ticket_pending($where=array())
     {
-        return $this->db->query("SELECT * FROM `ticket` WHERE `status` = 5");
+        return $this->db->get_where('ticket',$where);
+        // return $this->db->query("SELECT * FROM `ticket` WHERE `status` = 8");
     }
 
     public function get_ticket_closed()
@@ -88,5 +89,8 @@ class User_model extends CI_Model
         $this->db->where('status', '5');
         $query = $this->db->get('ticket');
         return $query->num_rows();
+    }
+    function getPetugas(){
+        return $this->db->get_where('user',array('role_id'=>3));
     }
 }
