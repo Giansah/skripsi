@@ -26,15 +26,18 @@ class User_model extends CI_Model
         return $this->db->query("SELECT * FROM `ticket_detail` WHERE `id_ticket` = $get_id ")->result();
     }
 
-    public function get_ticket_pending($where=array())
+    public function get_ticket_pending($where=array(),$or_where = array())
     {
-        return $this->db->get_where('ticket',$where);
+        $this->db->where($where);
+        $this->db->or_where($or_where);
+        return $this->db->get('ticket');
         // return $this->db->query("SELECT * FROM `ticket` WHERE `status` = 8");
     }
 
-    public function get_ticket_closed()
+    public function get_ticket_closed($where=array())
     {
-        return $this->db->query("SELECT * FROM `ticket` WHERE `status` = 8");
+        return $this->db->get_where('ticket',$where);
+        // return $this->db->query("SELECT * FROM `ticket` WHERE `status` = 7");
     }
 
     public function closed($id)

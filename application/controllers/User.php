@@ -115,17 +115,26 @@ class User extends CI_Controller
                 "petugas_id" => $this->session->userdata("user_id"),
                 "status" => 5
             );
+            $or_where = array("status"=>8);
+            $where_close = array(
+                "petugas_id" => $this->session->userdata("user_id"),
+                "status" => 7
+            );
         } else {
             $where = array(
                 "status" => 5
             );
+            $where_close = array(
+                "status" => 7
+            );
+            $or_where = array("status"=>8);
         }
         $data['role_id'] = $this->session->userdata("role_id");
 
         $data['ticket_open'] = $this->User_model->get_ticket_open()->result();
-        $data['ticket_pending'] = $this->User_model->get_ticket_pending($where)->result();
-        // var_dump($this->db->last_query());
-        $data['ticket_closed'] = $this->User_model->get_ticket_closed()->result();
+        $data['ticket_pending'] = $this->User_model->get_ticket_pending($where,$or_where)->result();
+        $data['ticket_closed'] = $this->User_model->get_ticket_closed($where_close)->result();
+        var_dump($this->db->last_query());
 
         $this->form_validation->set_rules('problem', 'Problem', 'required|trim');
         $this->form_validation->set_rules('report_by', 'Report By', 'required|trim');
