@@ -34,7 +34,7 @@ class User_model extends CI_Model
 
     public function get_ticket_closed()
     {
-        return $this->db->query("SELECT * FROM `ticket` WHERE `status` = 7");
+        return $this->db->query("SELECT * FROM `ticket` WHERE `status` = 8");
     }
 
     public function closed($id)
