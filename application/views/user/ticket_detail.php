@@ -42,7 +42,7 @@
                                 } else if ($td->category == 2) {
                                     $category = "Hardware";
                                 } else if ($td->category == 3) {
-                                    $category = "Software";
+                                    $category = "General";
                                 } else if ($td->category == 4) {
                                     $category = "Software";
                                 }

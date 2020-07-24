@@ -11,56 +11,78 @@
 
 
         <ul class="nav nav-tabs" id="pills-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Open Tickets</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pending Tickets</a>
-            </li>
+            <?php
+            if ($role_id != 3) {
+                echo '<li class="nav-item">
+            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Open Tickets</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pending Tickets</a>
+        </li>';
+            } else {
+                echo '<li class="nav-item">
+            <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="true">Pending Tickets</a>
+        </li>';
+            }
+            ?>
+
             <li class="nav-item">
                 <a class="nav-link danger" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Closed Tickets</a>
             </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <!-- <br>
+        <?php
+        if ($role_id != 3) {
+            $active = "fade";
+        ?>
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <!-- <br>
                 <br> -->
-                <br>
-                <div class="panel-body">
-                    <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> Created Ticket </button>
                     <br>
-                    <br>
-                    <br>
-                    <table class="display mt-5" id="table_id">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Problem / Subject</th>
-                                <th scope="col">Report By</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($ticket_open as $to) : ?>
+                    <div class="panel-body">
+                        <?php
+                        if ($role_id == 2) {
+                            echo '<button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> Created Ticket </button>';
+                        }
+                        ?>
+                        <br>
+                        <br>
+                        <br>
+                        <table class="display mt-5" id="table_id">
+                            <thead>
                                 <tr>
-                                    <th scope="row"><?= $i; ?></th>
-                                    <td><?= $to->created_date; ?></td>
-                                    <td><?= $to->problem; ?></td>
-                                    <td><?= $to->report_by; ?></td>
-                                    <td>
-                                        <a href="<?= base_url('user/ticket_detail'); ?>/<?= $to->id; ?>" class="btn btn-primary"> View Detail </a>
-                                    </td>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Problem / Subject</th>
+                                    <th scope="col">Report By</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                                <?php $i++ ?>
-                            <?php endforeach; ?>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                <?php foreach ($ticket_open as $to) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $i; ?></th>
+                                        <td><?= $to->created_date; ?></td>
+                                        <td><?= $to->problem; ?></td>
+                                        <td><?= $to->report_by; ?></td>
+                                        <td>
+                                            <a href="<?= base_url('user/ticket_detail'); ?>/<?= $to->id; ?>" class="btn btn-primary"> View Detail </a>
+                                        </td>
+                                    </tr>
+                                    <?php $i++ ?>
+                                <?php endforeach; ?>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <?php }
+            else{
+                $active = "show active";   
+            }
+                ?>
+            <div class="tab-pane fade <?=$active?>" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <div class="panel-body">
                     <!-- <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"> Created Ticket </button> -->
                     <br>
@@ -129,7 +151,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+            </div>
     </div>
 </div> <!-- /.container-fluid -->
 </div>

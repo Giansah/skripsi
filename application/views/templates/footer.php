@@ -51,7 +51,7 @@
             <script src="<?= base_url('assets/'); ?>ckeditor/ckeditor.js"></script>
             <!-- <script type="text/javascript" src="../assets/ckeditor/ckeditor.js"></script> -->
 
-            <script type="text/javascript" src="<?= base_url('assets/') ?>dataTable/DataTables/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="<?= base_url('assets/') ?>datatable/DataTables/js/jquery.dataTables.min.js"></script>
 
             <script>
                 $('.custom-file-input').on('change', function() {
