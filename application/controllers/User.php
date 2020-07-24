@@ -209,6 +209,7 @@ class User extends CI_Controller
             }
 
             $this->db->insert('ticket_detail', $data);
+            $this->db->where(array("id"=>$id));
             $this->db->update('ticket', $data2);
             $this->session->set_flashdata('message_update', '<div class="alert alert-success" role="alert"> Ticket updated !! </div>');
             redirect("user/ticket_detail/$id");
